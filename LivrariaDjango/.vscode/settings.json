@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "${workspaceFolder}/Lenv/bin/python", // Use "venv\\Scripts\\python.exe" on Windows
+    "python.terminal.activateEnvironment": true,
+    "python.venvPath": "${workspaceFolder}/Lenv"
+}
