@@ -1,11 +1,11 @@
 from django.db import models
-from django.core.validators import MinLengthValidator
 
 class Livro(models.Model):
     nome = models.CharField(max_length=100)
     autor = models.CharField(max_length=100)
     editora = models.CharField(max_length=100)
     ano = models.PositiveIntegerField()
+
 
     def __str__(self):
         return self.nome  # Display book name in admin panel
