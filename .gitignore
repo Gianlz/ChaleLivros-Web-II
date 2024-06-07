@@ -11,9 +11,12 @@ __pycache__/
 build/
 develop-eggs/
 dist/
-downloads/
+Lenv/
 migrations/
+__pycache__
+downloads/
 eggs/
+.vscode/
 .eggs/
 lib/
 lib64/
