@@ -6,7 +6,9 @@
     <script>
       function handleCredentialResponse(response) {
         console.log("Encoded JWT ID token: " + response.credential);
+        sendDjango(response); 
       }
+
       window.onload = function () {
         google.accounts.id.initialize({
           client_id: "CLIENT_ID",
@@ -18,11 +20,36 @@
         );
         google.accounts.id.prompt(); // also display the One Tap dialog
       }
+
+      function sendDjango(response) {
+        var id_token = response.credential;
+
+        fetch('/google/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id_token: id_token
+          }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data); 
+          if (data.status === 'ok') {
+            window.alert("Logado com sucesso!");
+            window.location.href = "/home";
+          } else {
+            console.error('login falied:', data.error);
+          }
+        })
+        .catch((err) => console.error('request error:', err));
+      }
     </script>
     <div id="buttonDiv"></div>
 {% endblock 'conteudo' %}
 
-
 {% block 'rodape' %}
     {% include "partials/footer.html" %}
 {% endblock 'rodape' %}
+    

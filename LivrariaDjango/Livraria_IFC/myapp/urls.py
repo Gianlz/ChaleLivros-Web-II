@@ -7,4 +7,5 @@ urlpatterns = [
     path("home/", views.home, name="home"),
     path("login/", views.login, name="login"),
     path("robots.txt", views.robots, name="robots"),
+    path('google/', views.google_login, name='google_login'),
 ]
