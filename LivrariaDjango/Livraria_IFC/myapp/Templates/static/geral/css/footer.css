@@ -1,0 +1,25 @@
+:root{
+ 
+    --footer-bg-color: #deb887;
+    --footer-p-color: #8b4513;
+}
+
+footer {
+    background-color: var(--footer-bg-color);
+    /* Cor de fundo do footer em marrom claro */
+    padding: 20px 0;
+    /* Espaçamento interno do footer */
+    text-align: center;
+    /* Alinhamento do texto no centro */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* Ocupar toda a largura */
+}
+
+footer p {
+    margin: 0;
+    /* Remover margem padrão */
+    color: var(--footer-p-color);
+    /* Cor do texto em marrom escuro */
+}
