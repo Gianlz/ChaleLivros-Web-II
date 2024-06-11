@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block 'cabecalho' %}
+{% include "partials/header.html" %}
+{% endblock 'cabecalho' %}
+
 {% block 'conteudo' %}
     <script src="https://accounts.google.com/gsi/client" async></script>
 
@@ -16,7 +20,7 @@
         });
         google.accounts.id.renderButton(
           document.getElementById("buttonDiv"),
-          { theme: "outline", size: "large" }  // customization attributes
+          { theme: "filled_black", size: "large", shape: "pill" }  // customization attributes
         );
         google.accounts.id.prompt(); // also display the One Tap dialog
       }
@@ -46,7 +50,12 @@
         .catch((err) => console.error('request error:', err));
       }
     </script>
-    <div id="buttonDiv"></div>
+
+    <div class="container box-login">
+      <h2>Login</h2>
+      <p>Use sua conta <strong>Google</strong> para continuar</p>
+      <div class="btn-google" id="buttonDiv"></div> 
+    </div>
 {% endblock 'conteudo' %}
 
 {% block 'rodape' %}
