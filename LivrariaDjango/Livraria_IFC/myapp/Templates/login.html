@@ -6,12 +6,12 @@
     <script>
       function handleCredentialResponse(response) {
         console.log("Encoded JWT ID token: " + response.credential);
-        sendDjango(response); 
+        sendDjango(response);
       }
 
       window.onload = function () {
         google.accounts.id.initialize({
-          client_id: "CLIENT_ID",
+          client_id: "{{ GOOGLE_CLIENT_ID }}",
           callback: handleCredentialResponse
         });
         google.accounts.id.renderButton(
@@ -35,7 +35,7 @@
         })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data); 
+          console.log(data);
           if (data.status === 'ok') {
             window.alert("Logado com sucesso!");
             window.location.href = "/home";
@@ -52,4 +52,3 @@
 {% block 'rodape' %}
     {% include "partials/footer.html" %}
 {% endblock 'rodape' %}
-    

@@ -4,16 +4,21 @@ from google.oauth2 import id_token
 from google.auth.transport import requests
 from django.http import JsonResponse
 from django.shortcuts import render
+from dotenv import load_dotenv
+import os
 
-from Livraria_IFC.settings import GOOGLE_CLIENT_ID
+load_dotenv()
 
+
+GOOGLE_CLIENT_ID = str(os.getenv('GOOGLE_API'))
 # Create your views here.
 
 def home(request):
     return render(request, 'home.html')
 
 def login(request):
-    return render(request, 'login.html')
+
+    return render(request, 'login.html', {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID})
 
 def robots(request):
     return render(request, 'robots.txt')
