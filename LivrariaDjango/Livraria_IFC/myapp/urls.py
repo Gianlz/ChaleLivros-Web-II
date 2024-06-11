@@ -9,3 +9,4 @@ urlpatterns = [
     path("robots.txt", views.robots, name="robots"),
     path('google/', views.google_login, name='google_login'),
 ]
+

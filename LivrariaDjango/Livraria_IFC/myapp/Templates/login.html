@@ -6,20 +6,20 @@
 
 {% block 'conteudo' %}
 
-    <script src="https://accounts.google.com/gsi/client" async></script>
+<script src="https://accounts.google.com/gsi/client" async></script>
 
-  <script>
-    GOOGLE_CLIENT_ID = "{{ GOOGLE_CLIENT_ID }}";
-  </script>
+<script>
+  GOOGLE_CLIENT_ID = "{{ GOOGLE_CLIENT_ID }}";
+</script>
 
 
-    <div class="container box-login">
-      <h2>Login</h2>
-      <p>Use sua conta <strong>Google</strong> para continuar</p>
-      <div class="btn-google" id="buttonDiv"></div> 
-    </div>
+<div class="container box-login">
+  <h2>Login</h2>
+  <p>Use sua conta <strong>Google</strong> para continuar</p>
+  <div class="btn-google" id="buttonDiv"></div>
+</div>
 {% endblock 'conteudo' %}
 
 {% block 'rodape' %}
-    {% include "partials/footer.html" %}
+{% include "partials/footer.html" %}
 {% endblock 'rodape' %}
