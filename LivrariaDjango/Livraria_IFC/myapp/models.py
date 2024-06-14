@@ -27,3 +27,15 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.nome  # Display user name in admin panel
+
+
+
+class GoogleUser(models.Model):
+    google_id = models.CharField(max_length=255, unique=True)
+    nome = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    imagem_url = models.URLField()
+
+    def __str__(self):
+        return self.nome
+

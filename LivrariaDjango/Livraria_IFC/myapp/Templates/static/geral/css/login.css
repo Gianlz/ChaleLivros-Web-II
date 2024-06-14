@@ -1,0 +1,33 @@
+:root
+{
+    --container-login-bg-color: #e2bd6d;
+    --container-login-bg-color-2: #f1f1ce;
+}
+
+.box-login
+{
+    max-width: 500px;
+    margin-top: 50px;
+    padding: 40px;
+    border-radius: 15px;
+    background: radial-gradient(var(--container-login-bg-color-2), var(--container-login-bg-color));
+}
+
+.btn-google
+{
+    margin-top: 30px;
+}
+
+h2
+{
+    letter-spacing: 2px;
+    text-align: center; 
+    font-size: 32px;
+}
+
+p
+{
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+}
