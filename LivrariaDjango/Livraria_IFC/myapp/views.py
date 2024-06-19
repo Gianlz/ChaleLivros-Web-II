@@ -3,10 +3,13 @@ from django.views.decorators.csrf import csrf_exempt
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from dotenv import load_dotenv
+from django.contrib.auth import login, logout
 import os
 from .models import GoogleUser
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -16,13 +19,15 @@ GOOGLE_CLIENT_ID = str(os.getenv('GOOGLE_API'))
 
 # Create your views here.
 
+@login_required(login_url='/login/')
 def home(request):
     return render(request, 'home.html')
 
-def login(request):
+def login_view(request):
 
     return render(request, 'login.html', {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID})
 
+@login_required(login_url='/login/')
 def robots(request):
     return render(request, 'robots.txt')
 
@@ -31,7 +36,7 @@ def robots(request):
 
 def verify_google_token(token, client_id):
     try:
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id, clock_skew_in_seconds=4)
         if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             return None, 'Invalid issuer'
         return idinfo, None
@@ -77,9 +82,17 @@ def google_login(request):
 
             if error:
                 return JsonResponse({'error': error}, status=400)
+            
+            user_django, created = User.objects.get_or_create(username=user.google_id)
+            login(request, user_django)
 
             return JsonResponse({'status': 'ok', 'data': {'google_id': user.google_id, 'nome': user.nome, 'email': user.email}})
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+    

@@ -132,5 +132,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'myapp/templates/static'),)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# login and seesions configs
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
