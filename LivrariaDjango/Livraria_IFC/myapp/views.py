@@ -43,6 +43,40 @@ def verify_google_token(token, client_id):
     except ValueError:
         return None, 'Invalid token'
 
+
+@csrf_exempt
+def google_login(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+    try:
+        body = json.loads(request.body)
+        token = body.get('id_token')
+
+        if not token:
+            return JsonResponse({'error': 'Token not provided'}, status=400)
+
+        idinfo, error = verify_google_token(token, GOOGLE_CLIENT_ID)
+
+        if error:
+            return JsonResponse({'error': error}, status=400)
+
+        google_id = idinfo['sub']
+        email = idinfo['email']
+        nome = idinfo['name']
+        imagem_url = idinfo['picture']
+
+        # Check if the user already exists
+        user, _ = get_or_create_user(idinfo)
+        
+        user_django, created = User.objects.get_or_create(first_name = nome, email = email, username = google_id)
+        login(request, user_django)
+
+        return JsonResponse({'status': 'ok', 'data': {'google_id': user.google_id, 'nome': user.nome, 'email': user.email}})
+
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
 def get_or_create_user(idinfo):
     google_id = idinfo['sub']
     email = idinfo['email']
@@ -50,47 +84,15 @@ def get_or_create_user(idinfo):
     imagem_url = idinfo['picture']
 
     # Check if the user already exists
-    user = GoogleUser.objects.filter(google_id=google_id).first()
-    if user:
-        return user, None
-
-    # If user does not exist, create new user
-    user = GoogleUser.objects.create(
+    user, _ = GoogleUser.objects.get_or_create(
         google_id=google_id,
-        nome=nome,
-        email=email,
-        imagem_url=imagem_url
+        defaults={
+            'nome': nome,
+            'email': email,
+            'imagem_url': imagem_url,
+        }
     )
     return user, None
-
-@csrf_exempt
-def google_login(request):
-    if request.method == 'POST':
-        try:
-            body = json.loads(request.body)
-            token = body.get('id_token')
-
-            if not token:
-                return JsonResponse({'error': 'Token not provided'}, status=400)
-
-            idinfo, error = verify_google_token(token, GOOGLE_CLIENT_ID)
-
-            if error:
-                return JsonResponse({'error': error}, status=400)
-
-            user, error = get_or_create_user(idinfo)
-
-            if error:
-                return JsonResponse({'error': error}, status=400)
-            
-            user_django, created = User.objects.get_or_create(username=user.google_id)
-            login(request, user_django)
-
-            return JsonResponse({'status': 'ok', 'data': {'google_id': user.google_id, 'nome': user.nome, 'email': user.email}})
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
-    else:
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 def user_logout(request):
     logout(request)
