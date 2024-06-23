@@ -7,7 +7,10 @@
 {% block 'conteudo' %}
 
     {% if user.is_authenticated %}
+        
         <p>Bem-vindo, {{ user.first_name }}!</p>
+        <img src="{{imagem_url}}" alt="" class= "rounded-circle">
+        
         <div class="text-center">
             <a class="btn btn-danger" href="{% url 'logout' %}">LogOut</a>
         </div>

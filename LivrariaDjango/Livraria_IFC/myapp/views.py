@@ -10,6 +10,8 @@ import os
 from .models import GoogleUser
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from . import models
+from django.shortcuts import get_object_or_404
 
 
 
@@ -21,7 +23,15 @@ GOOGLE_CLIENT_ID = str(os.getenv('GOOGLE_API'))
 
 @login_required(login_url='/login/')
 def home(request):
-    return render(request, 'home.html')
+    
+    # Get image from user
+    if request.user.is_authenticated:
+        user = request.user
+        actual = GoogleUser.objects.get(google_id = user)
+        image = actual.imagem_url
+
+
+    return render(request, 'home.html', {'imagem_url': image})
 
 def login_view(request):
 
@@ -68,7 +78,7 @@ def google_login(request):
 
         # Check if the user already exists
         user, _ = get_or_create_user(idinfo)
-        
+
         user_django, created = User.objects.get_or_create(first_name = nome, email = email, username = google_id)
         login(request, user_django)
 
