@@ -1,11 +1,11 @@
 function handleCredentialResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
+    // console.log("Encoded JWT ID token: " + response.credential); JWT ID
     sendDjango(response);
   }
   
   window.onload = function () {
     google.accounts.id.initialize({
-      client_id: GOOGLE_CLIENT_ID,
+      client_id: '606080329114-cgteq0omvvvvm1dhj2agggbk4qrt9ban.apps.googleusercontent.com',
       callback: handleCredentialResponse
     });
     google.accounts.id.renderButton(
@@ -31,7 +31,7 @@ function handleCredentialResponse(response) {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data); NEVER USE IN PRODUCTION
       if (data.status === 'ok') {
         window.alert("Logado com sucesso!");
         window.location.href = "/home";
