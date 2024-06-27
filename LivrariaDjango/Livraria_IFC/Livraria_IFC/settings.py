@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import logging
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -56,6 +58,83 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Livraria_IFC.urls'
+
+# settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {asctime} {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',  # Formato do timestamp (opcional)
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'arquivo.log'),
+            'formatter': 'verbose',
+        },
+        'livro_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'livro.log'),
+            'formatter': 'simple',
+        },
+        'usuario_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'usuario.log'),
+            'formatter': 'simple',
+        },
+        'googleuser_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'googleuser.log'),
+            'formatter': 'simple',
+        },
+        'views_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'views.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'livro_logger': {
+            'handlers': ['livro_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'usuario_logger': {
+            'handlers': ['usuario_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'googleuser_logger': {
+            'handlers': ['googleuser_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'views_logger': {
+            'handlers': ['views_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
 
 TEMPLATES = [
     {

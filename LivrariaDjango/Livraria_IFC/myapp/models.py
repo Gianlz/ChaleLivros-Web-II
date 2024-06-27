@@ -1,4 +1,10 @@
+# models.py
+
 from django.db import models
+import logging
+
+# Obtém um logger para o modelo Livro
+livro_logger = logging.getLogger('livro_logger')
 
 class Livro(models.Model):
     nome = models.CharField(max_length=100)
@@ -6,9 +12,16 @@ class Livro(models.Model):
     editora = models.CharField(max_length=100)
     ano = models.PositiveIntegerField()
 
-
     def __str__(self):
-        return self.nome  # Display book name in admin panel
+        return self.nome
+
+    def save(self, *args, **kwargs):
+        livro_logger.debug(f'Livro salvo: {self.nome}')
+        super().save(*args, **kwargs)
+
+
+# Obtém um logger para o modelo Usuario
+usuario_logger = logging.getLogger('usuario_logger')
 
 class Usuario(models.Model):
     MASCULINO = 'M'
@@ -26,9 +39,15 @@ class Usuario(models.Model):
     genero = models.CharField(max_length=1, choices=GENERO_CHOICES)
 
     def __str__(self):
-        return self.nome  # Display user name in admin panel
+        return self.nome
+
+    def save(self, *args, **kwargs):
+        usuario_logger.debug(f'Usuário salvo: {self.nome}')
+        super().save(*args, **kwargs)
 
 
+# Obtém um logger para o modelo GoogleUser
+googleuser_logger = logging.getLogger('googleuser_logger')
 
 class GoogleUser(models.Model):
     google_id = models.CharField(max_length=255, unique=True)
@@ -39,3 +58,6 @@ class GoogleUser(models.Model):
     def __str__(self):
         return self.nome
 
+    def save(self, *args, **kwargs):
+        googleuser_logger.debug(f'Usuário do Google salvo: {self.nome}')
+        super().save(*args, **kwargs)

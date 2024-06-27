@@ -10,10 +10,11 @@ import os
 from .models import GoogleUser
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import logging
 from . import models
 from django.shortcuts import get_object_or_404
 
-
+views_logger = logging.getLogger('views_logger')
 
 load_dotenv()
 
@@ -69,6 +70,7 @@ def google_login(request):
         idinfo, error = verify_google_token(token, GOOGLE_CLIENT_ID)
 
         if error:
+            views_logger.error(f'Google login error: {error}')
             return JsonResponse({'error': error}, status=400)
 
         google_id = idinfo['sub']
@@ -81,10 +83,11 @@ def google_login(request):
 
         user_django, created = User.objects.get_or_create(first_name = nome, email = email, username = google_id)
         login(request, user_django)
-
+        views_logger.info(f'User logged in via Google: {nome} ({email})')
         return JsonResponse({'status': 'ok', 'data': {'google_id': user.google_id, 'nome': user.nome, 'email': user.email}})
 
     except json.JSONDecodeError:
+        views_logger.error('Invalid JSON in Google login request', exc_info=True)
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
 def get_or_create_user(idinfo):
