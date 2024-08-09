@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+<link rel="stylesheet" href="{% static 'myapp/css/login.css' %}">
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+
+  {% include "partials/header.html" %}
+
+  <script src="https://accounts.google.com/gsi/client" async></script>
+  <script src="{% static 'myapp/js/login.js' %}"></script>
+
+  <script>
+    GOOGLE_CLIENT_ID = '{{ GOOGLE_CLIENT_ID }}';	
+  </script>
+
+  
+   <div class="container d-flex justify-content-center align-items-center mt-auto">
+    <div class="box p-5">
+      <h2 class="text-center">Login</h2>
+      <p class="text-center">Use sua conta <strong>Google</strong> para continuar</p>
+      <div id="buttonDiv" class="d-flex justify-content-center"></div>
+    </div>
+  </div>
+
+  {% include "partials/footer.html" %}
+
+{% endblock 'body' %}

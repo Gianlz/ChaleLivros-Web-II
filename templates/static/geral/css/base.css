@@ -1,0 +1,13 @@
+:root{
+     
+  --main-color: #f1f1ce;
+
+}
+
+body{
+  background-color: var(--main-color) !important;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column; 
+  min-height: 100vh;
+}
