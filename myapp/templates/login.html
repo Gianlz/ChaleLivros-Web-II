@@ -10,13 +10,12 @@
 
   {% include "partials/header.html" %}
 
-  <script src="https://accounts.google.com/gsi/client" async></script>
-  <script src="{% static 'myapp/js/login.js' %}"></script>
-
   <script>
     GOOGLE_CLIENT_ID = '{{ GOOGLE_CLIENT_ID }}';	
   </script>
 
+  <script src="https://accounts.google.com/gsi/client" async></script>
+  <script src="{% static 'myapp/js/login.js' %}"></script>
   
    <div class="container d-flex justify-content-center align-items-center mt-auto">
     <div class="box p-5">
