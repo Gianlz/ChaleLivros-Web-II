@@ -22,6 +22,10 @@ GOOGLE_CLIENT_ID = str(os.getenv('GOOGLE_API'))
 
 @login_required(login_url='/login/')
 def home(request):
+
+    if request.user.is_superuser:
+        log_user.warning(f'Redirecionado para Login => User {request.user} necessita de um Google ID para prosseguir')
+        return redirect('login')
     
     # Get image from user
     if request.user.is_authenticated:
@@ -29,17 +33,17 @@ def home(request):
         actual = GoogleUser.objects.get(google_id = user)
         image = actual.imagem_url
 
-    log_user.info(f'Acessou Pagina Home => User id {request.user}')
+    log_user.info(f'Acessou Pagina Home => User {request.user}')
     return render(request, 'home.html', {'imagem_url': image})
 
 def login_view(request):
 
-    log_user.info(f'Acessou Pagina Login => User id {request.user}')
+    log_user.info(f'Acessou Pagina Login => User {request.user}')
     return render(request, 'login.html', {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID})
 
 @login_required(login_url='/login/')
 def robots(request):
-    log_user.info(f'Acessou Robots.txt => User id {request.user}')
+    log_user.info(f'Acessou Robots.txt => User {request.user}')
     return render(request, 'robots.txt')
 
 
@@ -83,7 +87,7 @@ def google_login(request):
 
         user_django, created = User.objects.get_or_create(first_name = nome, email = email, username = google_id)
         login(request, user_django)
-        log_user.info(f'Login via Google => User id {request.user}')
+        log_user.info(f'Login via Google => User {request.user}')
         return JsonResponse({'status': 'ok', 'data': {'google_id': user.google_id, 'nome': user.nome, 'email': user.email}})
 
     except json.JSONDecodeError:
@@ -108,7 +112,7 @@ def get_or_create_user(idinfo):
     return user, None
 
 def user_logout(request):
-    log_user.info(f'Logout => User id {request.user}')
+    log_user.info(f'Logout => User {request.user}')
     logout(request)
     return redirect('login')
     
