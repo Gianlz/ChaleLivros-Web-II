@@ -20,6 +20,9 @@ GOOGLE_CLIENT_ID = str(os.getenv('GOOGLE_API'))
 
 # Create your views here.
 
+def view_404(request, exception ):
+    return render(request, '404.html')
+
 @login_required(login_url='/login/')
 def home(request):
 

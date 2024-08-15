@@ -11,3 +11,5 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
 ]
 
+# 404
+handler404 = 'myapp.views.view_404'
