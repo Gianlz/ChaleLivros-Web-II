@@ -18,3 +18,5 @@ rsa==4.9
 sqlparse==0.2.4
 tzdata==2024.1
 urllib3==2.2.1
+logging== 0.4.9.6
+logger== 1.4
