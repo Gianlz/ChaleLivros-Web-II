@@ -7,10 +7,12 @@ from django.shortcuts import render, redirect
 from dotenv import load_dotenv
 from django.contrib.auth import login, logout
 import os
-from .models import GoogleUser
+from .models import GoogleUser, Livro
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import logging
+from django.contrib import messages
+from django.contrib.messages import constants
 
 log_user = logging.getLogger('user')
 
@@ -118,4 +120,50 @@ def user_logout(request):
     log_user.info(f'Logout => User {request.user}')
     logout(request)
     return redirect('login')
+
+def listar_livros(request):
+
+    if not request.user.is_authenticated:
+        return redirect('login')
     
+    if request.method == "GET":
+        livros = Livro.objects.all()
+        return render(request, 'listar_livros.html', {'livros': livros})
+    
+def cadastrar_livro(request):
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    if request.method == "GET":
+        return render(request, 'cadastrar_livro.html', {'categorias': Livro.categoria_choices })
+    elif request.method == "POST":
+        nome = request.POST.get('nome')
+        categoria = request.POST.get('categoria')
+        preco = request.POST.get('preco')
+        paginas = request.POST.get('paginas')
+        sinopse = request.POST.get('sinopse')
+        autor = request.POST.get('autor')
+        editora = request.POST.get('editora')
+        ano = request.POST.get('ano')
+        capa = request.FILES.get('capa')
+
+        try:
+            livro = Livro(
+                nome=nome,
+                categoria=categoria,
+                preco=preco,
+                paginas=paginas,
+                sinopse=sinopse,
+                autor=autor,
+                editora=editora,
+                ano=ano,
+                capa=capa
+            )
+            livro.save()
+        except:
+            messages.add_message(request, constants.ERROR, 'Algo deu errado')
+            return redirect('/cadastrar_livro')
+        
+        messages.add_message(request, constants.SUCCESS, 'Livro cadastrado com sucesso')
+        return redirect('/cadastrar_livro')
