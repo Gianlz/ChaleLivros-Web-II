@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+<link rel="stylesheet" href="{% static 'myapp/css/listar_livros.css' %}">
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+
+{% include "partials/header.html" %}
+
+<div class="container text-center mt-4">
+  <div class="add-livro">
+    <a class="btn btn-success" href="{% url 'cadastrar_livro' %}">+ Adicionar Livro</a>
+  </div>
+
+  <div class="slider mt-4">
+    <h2>Slider dos Livros</h2>
+    {% for livro in livros %}
+    <img class="mt-4" style="width: 150px; height: 200px; margin-left: 20px;" src="{{ livro.capa.url }}" alt="Capa do livro {{ livro.nome }}">
+    {% endfor %}
+  </div>
+</div>
+
+{% include "partials/footer.html" %}
+
+<script src="{% static 'myapp/js/slider.js' %}"></script>
+
+{% endblock 'body' %}

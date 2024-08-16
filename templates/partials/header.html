@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center">
                 <h1 class="h3 mb-0">Chalé dos Livros</h1>
             </div>
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and not user.is_superuser %}
                 {% include "partials/barra_navegacao.html" %}
             {% endif %}
         </div>

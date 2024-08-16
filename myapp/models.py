@@ -7,10 +7,25 @@ import logging
 livro_logger = logging.getLogger('livro_logger')
 
 class Livro(models.Model):
+
+    categoria_choices = (
+        ('AC', 'Ação'),
+        ('AV', 'Aventura'),
+        ('FC', 'Ficção Científica'),
+        ('ROM', 'Romance'),
+        ('TEC', 'Tecnologia'),
+        ('TER', 'Terror'),
+    )
+
     nome = models.CharField(max_length=100)
+    categoria = models.CharField(max_length=4, choices=categoria_choices, default='AC')
+    preco = models.DecimalField(max_digits=6, decimal_places=2)
+    paginas = models.PositiveIntegerField()
+    sinopse = models.CharField(max_length=255)
     autor = models.CharField(max_length=100)
     editora = models.CharField(max_length=100)
     ano = models.PositiveIntegerField()
+    capa = models.FileField(upload_to='capa')
 
     def __str__(self):
         return self.nome
