@@ -143,28 +143,79 @@ os.makedirs(os.path.join(BASE_DIR, 'logs'), exist_ok=True)
 # Logging
 LOGGING = {
     'version': 1,
-    'loggers': {
-        'user': {
-            'handlers': ['file',],
-            'level': 'INFO'
-        }
-    },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/logs.log'),
-            'formatter': 'simpleRe',
-        },
-    },
+    'disable_existing_loggers': False,
     'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {asctime} {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',  # Optional timestamp format
+        },
         'simpleRe': {
             'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         }
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'logs.log'),
+            'formatter': 'verbose',
+        },
+        'livro_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'livro.log'),
+            'formatter': 'simple',
+        },
+
+        'googleuser_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'googleuser.log'),
+            'formatter': 'simple',
+        },
+        'views_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'myapp', 'Logs', 'views.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'livro_logger': {
+            'handlers': ['livro_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+
+        'googleuser_logger': {
+            'handlers': ['googleuser_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'views_logger': {
+            'handlers': ['views_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'user': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        }
     }
-    
 }
+
+
 
 # Messages
 
