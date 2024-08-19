@@ -151,7 +151,8 @@ def cadastrar_livro(request):
         return redirect('login')
 
     if request.method == "GET":
-        return render(request, 'cadastrar_livro.html', {'categorias': Livro.categoria_choices})
+        categoria_choices = Livro.categoria_choices
+        return render(request, 'cadastrar_livro.html', {'categorias': categoria_choices})
     elif request.method == "POST":
         nome = request.POST.get('nome')
         categoria = request.POST.get('categorias')

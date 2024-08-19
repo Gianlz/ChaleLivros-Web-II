@@ -6,18 +6,18 @@ import uuid
 livro_logger = logging.getLogger('livro_logger')
 
 class Livro(models.Model):
-
-    categoria_choices = (
+    categoria_choices = [
         ('Ação', 'Ação'),
         ('Aventura', 'Aventura'),
         ('Ficção Científica', 'Ficção Científica'),
         ('Romance', 'Romance'),
         ('Tecnologia', 'Tecnologia'),
         ('Terror', 'Terror'),
-    )
+    ]
+    
     _id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nome = models.CharField(max_length=100)
-    categoria = models.CharField(max_length=4, choices=categoria_choices, default='AC')
+    categoria = models.CharField(max_length=35, choices=categoria_choices, default='Ação')
     preco = models.DecimalField(max_digits=6, decimal_places=2)
     paginas = models.PositiveIntegerField()
     sinopse = models.CharField(max_length=255)
@@ -26,13 +26,12 @@ class Livro(models.Model):
     ano = models.PositiveIntegerField()
     capa = models.FileField(upload_to='capa')
 
-    def str(self):
+    def __str__(self):
         return self.nome
 
-    def save(self, args, **kwargs):
+    def save(self, *args, **kwargs):
         livro_logger.debug(f'Livro salvo: {self.nome}')
-        super().save(args, kwargs)
-
+        super().save(*args, **kwargs)
 
 googleuser_logger = logging.getLogger('googleuser_logger')
 
