@@ -1,22 +1,21 @@
-# models.py
 
 from django.db import models
 import logging
+import uuid
 
-# Obtém um logger para o modelo Livro
 livro_logger = logging.getLogger('livro_logger')
 
 class Livro(models.Model):
 
     categoria_choices = (
-        ('AC', 'Ação'),
-        ('AV', 'Aventura'),
-        ('FC', 'Ficção Científica'),
-        ('ROM', 'Romance'),
-        ('TEC', 'Tecnologia'),
-        ('TER', 'Terror'),
+        ('Ação', 'Ação'),
+        ('Aventura', 'Aventura'),
+        ('Ficção Científica', 'Ficção Científica'),
+        ('Romance', 'Romance'),
+        ('Tecnologia', 'Tecnologia'),
+        ('Terror', 'Terror'),
     )
-
+    _id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nome = models.CharField(max_length=100)
     categoria = models.CharField(max_length=4, choices=categoria_choices, default='AC')
     preco = models.DecimalField(max_digits=6, decimal_places=2)
@@ -27,14 +26,14 @@ class Livro(models.Model):
     ano = models.PositiveIntegerField()
     capa = models.FileField(upload_to='capa')
 
-    def __str__(self):
+    def str(self):
         return self.nome
 
-    def save(self, *args, **kwargs):
+    def save(self, args, **kwargs):
         livro_logger.debug(f'Livro salvo: {self.nome}')
-        super().save(*args, **kwargs)
+        super().save(args, kwargs)
 
-# Obtém um logger para o modelo GoogleUser
+
 googleuser_logger = logging.getLogger('googleuser_logger')
 
 class GoogleUser(models.Model):
@@ -43,9 +42,9 @@ class GoogleUser(models.Model):
     email = models.EmailField(unique=True)
     imagem_url = models.URLField()
 
-    def __str__(self):
+    def str(self):
         return self.nome
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, kwargs):
         googleuser_logger.debug(f'Usuário do Google salvo: {self.nome}')
         super().save(*args, **kwargs)
