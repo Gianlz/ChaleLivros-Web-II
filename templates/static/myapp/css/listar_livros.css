@@ -1,0 +1,25 @@
+.slider {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  width: 100%;
+  max-width: 250px;
+  height: 350px;
+  object-fit: cover;
+}
+
+.swiper {
+  width: 100%;
+  max-width: 400px;
+  height: 485px;
+}
+
+.swiper-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}

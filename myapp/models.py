@@ -1,6 +1,7 @@
 # models.py
 
 from django.db import models
+from djongo import models
 import logging
 
 # Obtém um logger para o modelo Livro
@@ -8,17 +9,18 @@ livro_logger = logging.getLogger('livro_logger')
 
 class Livro(models.Model):
 
-    categoria_choices = (
-        ('AC', 'Ação'),
-        ('AV', 'Aventura'),
-        ('FC', 'Ficção Científica'),
-        ('ROM', 'Romance'),
-        ('TEC', 'Tecnologia'),
-        ('TER', 'Terror'),
-    )
+    categoria_choices = [
+        ('Ação', 'Ação'),
+        ('Aventura', 'Aventura'),
+        ('Ficção Científica', 'Ficção Científica'),
+        ('Romance', 'Romance'),
+        ('Tecnologia', 'Tecnologia'),
+        ('Terror', 'Terror'),
+    ]
 
+    _id = models.ObjectIdField()
     nome = models.CharField(max_length=100)
-    categoria = models.CharField(max_length=4, choices=categoria_choices, default='AC')
+    categoria = models.CharField(max_length=50, choices=categoria_choices, default='Ação')
     preco = models.DecimalField(max_digits=6, decimal_places=2)
     paginas = models.PositiveIntegerField()
     sinopse = models.CharField(max_length=255)

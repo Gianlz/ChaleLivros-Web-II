@@ -127,7 +127,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'templates/static'),)
 STATIC_ROOT = os.path.join('static')
 
 os.makedirs(os.path.join(BASE_DIR, 'media'), exist_ok=True)
-os.makedirs(os.path.join(BASE_DIR, 'myapp', 'Logs'), exist_ok=True)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -139,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 
-os.makedirs(os.path.join(BASE_DIR, 'logs'), exist_ok=True)
+os.makedirs(os.path.join(BASE_DIR, 'myapp', 'Logs'), exist_ok=True)
 
 # Logging
 LOGGING = {
