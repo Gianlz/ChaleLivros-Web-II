@@ -3,6 +3,7 @@
 {% block 'head' %}
 
 <link rel="stylesheet" href="{% static 'myapp/css/listar_livros.css' %}">
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 
 {% endblock 'head' %}
 
@@ -16,15 +17,31 @@
   </div>
 
   <div class="slider mt-4">
-    <h2>Slider dos Livros</h2>
-    {% for livro in livros %}
-    <img class="mt-4" style="width: 150px; height: 200px; margin-left: 20px;" src="{{ livro.capa.url }}" alt="Capa do livro {{ livro.nome }}">
-    {% endfor %}
+    <span class="h4">Livros Cadastrados</span>
+    <div class="swiper mt-4">
+      <div class="swiper-wrapper">
+        {% for livro in livros %}
+        <div class="swiper-slide">
+          <div class="img">
+            <img src="{{ livro.capa.url }}" alt="Capa Livro: {{ livro.nome }}">
+          </div>
+          <div class="infos">
+            <p class="h5 mt-2">{{livro.nome}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
   </div>
 </div>
 
 {% include "partials/footer.html" %}
 
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src="{% static 'myapp/js/slider.js' %}"></script>
 
 {% endblock 'body' %}
