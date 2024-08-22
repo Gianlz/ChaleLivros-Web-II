@@ -94,7 +94,7 @@ Para gerar e configurar uma chave de API do Google OAuth para o projeto, siga os
 - Informe um nome que remeta ao seu projeto.
 
 #### Adicione Origens JavaScript Autorizadas e URIs de Redirecionamento Autorizados
-- No campo **Origens JavaScript autorizadas**, adicione os seguintes URIs:
+- No campo **Origens JavaScript autorizadas**, adicione os seguintes URIs (em caso de test em localhost, em servidor use seus próprios urls):
   ```plaintext
   http://localhost
   http://localhost:8000
