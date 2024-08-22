@@ -48,10 +48,65 @@ Primeiramente clone o projeto da master
     SECRET_KEY = DJANGO_key (normalmente gerada em settings, é recomendável criar seu próprio core django e usar a própria key)
     GOOGLE_API = GOOGLE_api_key (a key usada)
      ```
-  Passo a passo para gerar uma API key noo google Oauth.
+  ## Configuração do Google OAuth API Key
 
-  ............
+Para gerar e configurar uma chave de API do Google OAuth para o projeto, siga os passos abaixo:
 
+## Passo a Passo
+
+### 1. Acesse o Google Cloud Console
+- Vá para [Google Cloud Console](https://console.cloud.google.com/?hl=pt-br).
+
+### 2. Crie um Novo Projeto
+- Clique em [Criar Novo Projeto](https://console.cloud.google.com/projectcreate).
+- Preencha os detalhes do seu projeto e conclua a criação.
+
+### 3. Acesse as Credenciais
+- No menu lateral esquerdo, clique em "Credenciais" ou acesse diretamente [Credenciais](https://console.cloud.google.com/apis/credentials).
+
+### 4. Crie um ID do Cliente OAuth
+- Clique em **+ CRIAR CREDENCIAIS** e selecione a opção **ID do Cliente OAuth**.
+
+### 5. Configure a Tela de Consentimento
+- Você será direcionado para a configuração da tela de consentimento.
+- Clique em [Tela de Consentimento](https://console.cloud.google.com/apis/credentials/consent).
+- Selecione a opção **Externo** e clique em **Criar**.
+
+#### Informações Necessárias:
+- **Nome do App**: Informe um nome que remeta ao seu projeto.
+- **E-mail para Suporte do Usuário**: Recomendado usar o e-mail associado ao Google Cloud.
+- **Domínio do App**: Informe o link da página inicial do seu aplicativo (por exemplo, `http://localhost:8000`).
+- **Dados de Contato do Desenvolvedor**: Informe seu e-mail principal.
+- Clique em **Salvar e Continuar**.
+
+### 6. Adicione e Remova Escopos
+- Clique em **ADICIONAR OU REMOVER ESCOPOS**.
+- Selecione as duas primeiras caixas de seleção: `/auth/userinfo.email` e `/auth/userinfo.profile`.
+- Clique em **Atualizar** e depois em **Salvar e Continuar**.
+
+### 7. Adicione Usuários
+- Em **+ ADD USERS**, adicione seu e-mail e clique em **Salvar e Continuar**.
+- Clique em **Voltar para o Painel**.
+
+### 8. Crie a Credencial
+- Clique em **+ CRIAR CREDENCIAIS** e selecione **ID do Cliente OAuth**.
+- Em **Tipo do Aplicativo**, selecione **Aplicativo da Web**.
+- Informe um nome que remeta ao seu projeto.
+
+#### Adicione Origens JavaScript Autorizadas e URIs de Redirecionamento Autorizados
+- No campo **Origens JavaScript autorizadas**, adicione os seguintes URIs:
+  ```plaintext
+  http://localhost
+  http://localhost:8000
+  http://127.0.0.1
+  http://127.0.0.1:8000
+  ```
+- No campo **URIs de redirecionamento autorizados**, adicione os mesmos URIs.
+- Clique em **CRIAR**.
+
+### 9. Copie o ID do Cliente
+- Copie o **ID do Cliente** gerado.
+- Adicione o ID do Cliente na variável `GOOGLE_API` do arquivo `.env` do seu projeto.
 
   # Setup do banco de dados
 
