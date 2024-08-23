@@ -19,6 +19,11 @@ O uso é totalmente educacional e avaliativo na disciplina de Desenvolvimento We
 ## Preparação e Instalação
 
 Versão do Python usada: 3.10> [Python 3.10](https://www.python.org/)
+Use VirtualEnv to make better
+
+```bash
+python -m venv NOME_DO_AMBIENTE
+```
 
 Primeiramente clone o projeto da master
 
